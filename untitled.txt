@@ -1,0 +1,161 @@
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- Create ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "ViunzeGui"
+screenGui.Parent = playerGui
+
+-- Create Toggle Button (logo) to show/hide menu
+local toggleButton = Instance.new("ImageButton")
+toggleButton.Size = UDim2.new(0, 50, 0, 50)
+toggleButton.Position = UDim2.new(0, 10, 0, 10)
+toggleButton.BackgroundTransparency = 1
+toggleButton.Image = "rbxassetid://7072722054" -- contoh logo, bisa ganti sesuai keinginan
+toggleButton.Parent = screenGui
+
+-- Create Main Frame (menu)
+local mainFrame = Instance.new("Frame")
+mainFrame.Size = UDim2.new(0, 300, 0, 400)
+mainFrame.Position = UDim2.new(0, 70, 0, 10)
+mainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+mainFrame.BorderSizePixel = 0
+mainFrame.Visible = false -- awalnya hidden
+mainFrame.Parent = screenGui
+
+-- UIListLayout for neat vertical layout
+local layout = Instance.new("UIListLayout")
+layout.Parent = mainFrame
+layout.SortOrder = Enum.SortOrder.LayoutOrder
+layout.Padding = UDim.new(0, 8)
+
+-- Function to create toggle buttons
+local function createToggleButton(name)
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(1, 0, 0, 40)
+    btn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    btn.TextColor3 = Color3.new(1,1,1)
+    btn.Font = Enum.Font.SourceSansBold
+    btn.TextSize = 18
+    btn.Text = name .. " : OFF"
+    btn.AutoButtonColor = true
+    btn.LayoutOrder = 1
+    btn.Parent = mainFrame
+    
+    local toggled = false
+    btn.MouseButton1Click:Connect(function()
+        toggled = not toggled
+        btn.Text = name .. (toggled and " : ON" or " : OFF")
+        -- Put your feature toggle logic here
+        print(name .. " toggled to " .. (toggled and "ON" or "OFF"))
+    end)
+    
+    return btn
+end
+
+-- Menu Labels and Buttons
+
+local trollingLabel = Instance.new("TextLabel")
+trollingLabel.Text = "Trolling Menu"
+trollingLabel.Size = UDim2.new(1, 0, 0, 30)
+trollingLabel.BackgroundTransparency = 1
+trollingLabel.TextColor3 = Color3.new(1,1,1)
+trollingLabel.Font = Enum.Font.SourceSansBold
+trollingLabel.TextSize = 22
+trollingLabel.LayoutOrder = 0
+trollingLabel.Parent = mainFrame
+
+local flyToggle = createToggleButton("Fly")
+flyToggle.LayoutOrder = 1
+local noclipToggle = createToggleButton("Noclip")
+noclipToggle.LayoutOrder = 2
+local killAuraToggle = createToggleButton("Kill Aura")
+killAuraToggle.LayoutOrder = 3
+
+local discordLabel = Instance.new("TextLabel")
+discordLabel.Text = "XploitForce Discord"
+discordLabel.Size = UDim2.new(1, 0, 0, 30)
+discordLabel.BackgroundTransparency = 1
+discordLabel.TextColor3 = Color3.new(1,1,1)
+discordLabel.Font = Enum.Font.SourceSansBold
+discordLabel.TextSize = 20
+discordLabel.LayoutOrder = 4
+discordLabel.Parent = mainFrame
+
+local discordButton = Instance.new("TextButton")
+discordButton.Text = "Join Discord"
+discordButton.Size = UDim2.new(1, 0, 0, 40)
+discordButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+discordButton.TextColor3 = Color3.new(1,1,1)
+discordButton.Font = Enum.Font.SourceSansBold
+discordButton.TextSize = 18
+discordButton.LayoutOrder = 5
+discordButton.Parent = mainFrame
+
+discordButton.MouseButton1Click:Connect(function()
+    setclipboard("https://discord.gg/QjsgcpFDDr")
+    print("Discord link copied to clipboard!")
+end)
+
+local settingsLabel = Instance.new("TextLabel")
+settingsLabel.Text = "Settings"
+settingsLabel.Size = UDim2.new(1, 0, 0, 30)
+settingsLabel.BackgroundTransparency = 1
+settingsLabel.TextColor3 = Color3.new(1,1,1)
+settingsLabel.Font = Enum.Font.SourceSansBold
+settingsLabel.TextSize = 20
+settingsLabel.LayoutOrder = 6
+settingsLabel.Parent = mainFrame
+
+local creditsButton = Instance.new("TextButton")
+creditsButton.Text = "Credits"
+creditsButton.Size = UDim2.new(1, 0, 0, 40)
+creditsButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+creditsButton.TextColor3 = Color3.new(1,1,1)
+creditsButton.Font = Enum.Font.SourceSansBold
+creditsButton.TextSize = 18
+creditsButton.LayoutOrder = 7
+creditsButton.Parent = mainFrame
+
+local popup = Instance.new("Frame")
+popup.Size = UDim2.new(0, 250, 0, 150)
+popup.Position = UDim2.new(0.5, -125, 0.5, -75)
+popup.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+popup.BorderSizePixel = 0
+popup.Visible = false
+popup.Parent = screenGui
+
+local popupText = Instance.new("TextLabel")
+popupText.Size = UDim2.new(1, -20, 1, -40)
+popupText.Position = UDim2.new(0, 10, 0, 10)
+popupText.BackgroundTransparency = 1
+popupText.TextColor3 = Color3.new(1,1,1)
+popupText.Font = Enum.Font.SourceSansBold
+popupText.TextSize = 16
+popupText.TextWrapped = true
+popupText.Text = "Script made by Viunze\nThanks for using!\n© XploitForce"
+popupText.Parent = popup
+
+local closeBtn = Instance.new("TextButton")
+closeBtn.Text = "Close"
+closeBtn.Size = UDim2.new(0, 80, 0, 30)
+closeBtn.Position = UDim2.new(0.5, -40, 1, -35)
+closeBtn.BackgroundColor3 = Color3.fromRGB(100, 40, 40)
+closeBtn.TextColor3 = Color3.new(1,1,1)
+closeBtn.Font = Enum.Font.SourceSansBold
+closeBtn.TextSize = 18
+closeBtn.Parent = popup
+
+closeBtn.MouseButton1Click:Connect(function()
+    popup.Visible = false
+end)
+
+creditsButton.MouseButton1Click:Connect(function()
+    popup.Visible = true
+end)
+
+-- Toggle main menu visibility when clicking logo
+toggleButton.MouseButton1Click:Connect(function()
+    mainFrame.Visible = not mainFrame.Visible
+end)
